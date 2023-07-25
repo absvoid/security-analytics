@@ -184,7 +184,7 @@ public class TransportIndexRuleAction extends HandledTransportAction<IndexRuleRe
                 List<Object> queries = backend.convertRule(parsedRule);
                 Set<String> queryFieldNames = backend.getQueryFields().keySet();
                 Rule ruleDoc = new Rule(
-                        NO_ID, NO_VERSION, parsedRule, category,
+                        parsedRule.getId().toString(), NO_VERSION, parsedRule, category,
                         queries,
                         new ArrayList<>(queryFieldNames),
                         rule
@@ -248,6 +248,7 @@ public class TransportIndexRuleAction extends HandledTransportAction<IndexRuleRe
             } else {
                 IndexRequest indexRequest = new IndexRequest(Rule.CUSTOM_RULES_INDEX)
                         .setRefreshPolicy(request.getRefreshPolicy())
+                        .id(rule.getId())
                         .source(rule.toXContent(XContentFactory.jsonBuilder(), new ToXContent.MapParams(Map.of("with_type", "true"))))
                         .timeout(indexTimeout);
 
