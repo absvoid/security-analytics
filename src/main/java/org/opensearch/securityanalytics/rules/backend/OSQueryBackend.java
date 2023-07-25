@@ -104,12 +104,6 @@ public class OSQueryBackend extends QueryBackend {
     private String bucketTriggerScript;
 
     private static final String groupExpression = "(%s)";
-    private static final Map<String, String> compareOperators = Map.of(
-            SigmaCompareExpression.CompareOperators.GT, "gt",
-            SigmaCompareExpression.CompareOperators.GTE, "gte",
-            SigmaCompareExpression.CompareOperators.LT, "lt",
-            SigmaCompareExpression.CompareOperators.LTE, "lte"
-    );
 
     private static final List<Class<?>> precedence = Arrays.asList(ConditionNOT.class, ConditionAND.class, ConditionOR.class);
 
@@ -136,7 +130,7 @@ public class OSQueryBackend extends QueryBackend {
         this.unboundValueNumExpression = "%s: %s";
         this.unboundWildcardExpression = "%s: %s";
         this.unboundReExpression = "%s: /%s/";
-        this.compareOpExpression = "\"%s\" \"%s\" %s";
+        this.compareOpExpression = "%s %s %s";
         this.valExpCount = 0;
         this.aggQuery = "{\"%s\":{\"terms\":{\"field\":\"%s\"},\"aggs\":{\"%s\":{\"%s\":{\"field\":\"%s\"}}}}}";
         this.aggCountQuery = "{\"%s\":{\"terms\":{\"field\":\"%s\"}}}";
@@ -314,7 +308,7 @@ public class OSQueryBackend extends QueryBackend {
     @Override
     public Object convertConditionFieldEqValOpVal(ConditionFieldEqualsValueExpression condition) {
         return String.format(Locale.getDefault(), this.compareOpExpression, this.getMappedField(condition.getField()),
-                compareOperators.get(((SigmaCompareExpression) condition.getValue()).getOp()), ((SigmaCompareExpression) condition.getValue()).getNumber().toString());
+                ((SigmaCompareExpression) condition.getValue()).getOp(), ((SigmaCompareExpression) condition.getValue()).getNumber().toString());
     }
 
 // TODO: below methods will be supported when Sigma Expand Modifier is supported.

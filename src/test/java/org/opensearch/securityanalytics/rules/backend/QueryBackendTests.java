@@ -365,7 +365,7 @@ public class QueryBackendTests extends OpenSearchTestCase {
                 "                    fieldC|gt: 123\n" +
                 "                    fieldD|gte: 123\n" +
                 "                condition: sel", false));
-        Assert.assertEquals("(\"fieldA\" \"lt\" 123) AND (\"mappedB\" \"lte\" 123) AND (\"fieldC\" \"gt\" 123) AND (\"fieldD\" \"gte\" 123)", queries.get(0).toString());
+        Assert.assertEquals("(fieldA < 123) AND (mappedB <= 123) AND (fieldC > 123) AND (fieldD >= 123)", queries.get(0).toString());
     }
 
     public void testConvertCompareStr() throws IOException {
