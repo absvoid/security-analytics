@@ -13,3 +13,21 @@ fieldmappings:
   CurrentDirectory: process-working_directory
   LogonId: process-real_user-id
   creationTime: timestamp
+  FileName: file-name
+  FileEvent: file-event
+  NetLocalAddr: net-local-addr
+  NetLocalPort: net-local-port
+  NetPeerAddr: net-peer-addr
+  NetPeerPort: net-peer-port
+  NetProto: net-proto
+  NetProc: net-proc
+  NetState: net-state
+  NetFlowRx: net-flow-rx
+  NetFlowTx: net-flow-tx
+  CpuTotalPct: cpu-total-pct
+  MemTotalPct: mem-total-pct
+  BlastPort: blast-port
+  BlastFreq: blast-freq
+  ProcEvent: proc-event
+  DnsHost: dns-question-name
+  DnsIp: dns-resolved_ip

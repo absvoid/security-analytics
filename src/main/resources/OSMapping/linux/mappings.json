@@ -25,7 +25,7 @@
       "type": "alias"
     },
     "process-exe": {
-      "path": "process.exe",
+      "path": "params.proc.exe",
       "type": "alias"
     },
     "rsa-web-remote_domain": {
@@ -33,15 +33,15 @@
       "type": "alias"
     },
     "process-command_line": {
-      "path": "process.command_line",
+      "path": "params.proc.cmd",
       "type": "alias"
     },
     "process-parent-executable": {
-      "path": "process.parent.executable",
+      "path": "params.proc.pexe",
       "type": "alias"
     },
     "process-working_directory": {
-      "path": "process.working_directory",
+      "path": "params.proc.cwd",
       "type": "alias"
     },
     "process-real_user-id": {
@@ -50,6 +50,78 @@
     },
     "timestamp": {
       "path": "creationTime",
+      "type": "alias"
+    },
+    "file-name": {
+      "path": "params.file.name",
+      "type": "alias"
+    },
+    "file-event": {
+      "path": "params.file.event",
+      "type": "alias"
+    },
+    "net-local-addr": {
+      "path": "params.net.local.addr",
+      "type": "alias"
+    },
+    "net-local-port": {
+      "path": "params.net.local.port",
+      "type": "alias"
+    },
+    "net-peer-addr": {
+      "path": "params.net.peer.addr",
+      "type": "alias"
+    },
+    "net-peer-port": {
+      "path": "params.net.peer.port",
+      "type": "alias"
+    },
+    "net-proto": {
+      "path": "params.net.proto",
+      "type": "alias"
+    },
+    "net-proc": {
+      "path": "params.net.proc",
+      "type": "alias"
+    },
+    "net-state": {
+      "path": "params.net.state",
+      "type": "alias"
+    },
+    "net-flow-rx": {
+      "path": "params.net.flow.rx",
+      "type": "alias"
+    },
+    "net-flow-tx": {
+      "path": "params.net.flow.tx",
+      "type": "alias"
+    },
+    "cpu-total-pct": {
+      "path": "params.system.cpu.total.pct",
+      "type": "alias"
+    },
+    "mem-total-pct": {
+      "path": "params.system.memory.used.pct",
+      "type": "alias"
+    },
+    "blast-port": {
+      "path": "params.blast.port",
+      "type": "alias"
+    },
+    "blast-freq": {
+      "path": "params.blast.freq",
+      "type": "alias"
+    },
+    "proc-event": {
+      "path": "params.proc.event",
+      "type": "alias"
+    },
+    "dns-question-name": {
+      "path": "params.dns.question.name",
+      "type": "alias"
+    },
+    "dns-resolved_ip": {
+      "path": "params.dns.resolved_ip",
       "type": "alias"
     }
   }
