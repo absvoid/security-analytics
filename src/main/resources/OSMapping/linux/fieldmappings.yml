@@ -28,6 +28,8 @@ fieldmappings:
   MemTotalPct: mem-total-pct
   BlastPort: blast-port
   BlastFreq: blast-freq
+  PortDetect: port-detect
+  PortList: port-list
   ProcEvent: proc-event
   DnsHost: dns-question-name
   DnsIp: dns-resolved_ip

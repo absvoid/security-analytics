@@ -112,6 +112,14 @@
       "path": "params.blast.freq",
       "type": "alias"
     },
+    "port-detect": {
+      "path": "params.local.detect",
+      "type": "alias"
+    },
+    "port-list": {
+      "path": "params.local.port.list",
+      "type": "alias"
+    },
     "proc-event": {
       "path": "params.proc.event",
       "type": "alias"
