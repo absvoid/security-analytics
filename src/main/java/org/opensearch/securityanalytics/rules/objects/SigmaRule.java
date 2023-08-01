@@ -191,6 +191,10 @@ public class SigmaRule {
         return detection;
     }
 
+    public String getTimeframe() {
+        return detection.getTimeframe();
+    }
+
     public UUID getId() {
         return id;
     }

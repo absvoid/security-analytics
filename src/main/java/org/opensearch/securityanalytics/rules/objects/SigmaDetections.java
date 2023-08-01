@@ -19,13 +19,16 @@ public class SigmaDetections {
 
     private Map<String, SigmaDetection> detections;
 
+    private String timeframe;
+
     private List<String> condition;
 
     private List<SigmaCondition> parsedCondition;
 
-    public SigmaDetections(Map<String, SigmaDetection> detections, List<String> condition) throws SigmaDetectionError {
+    public SigmaDetections(Map<String, SigmaDetection> detections, String timeframe, List<String> condition) throws SigmaDetectionError {
         this.detections = detections;
         this.condition = condition;
+        this.timeframe = timeframe;
 
         if (this.detections.isEmpty()) {
             throw new SigmaDetectionError("No detections defined in Sigma rule");
@@ -48,6 +51,13 @@ public class SigmaDetections {
             throw new SigmaConditionError("Sigma rule must contain at least one condition");
         }
 
+        String timeframe;
+        if (detectionMap.containsKey("timeframe")) {
+            timeframe = detectionMap.get("timeframe").toString();
+        } else {
+            timeframe = null;
+        }
+
         Map<String, SigmaDetection> detections = new HashMap<>();
         for (Map.Entry<String, Object> detection: detectionMap.entrySet()) {
             if (!"condition".equals(detection.getKey())) {
@@ -55,11 +65,15 @@ public class SigmaDetections {
             }
         }
 
-        return new SigmaDetections(detections, conditionList);
+        return new SigmaDetections(detections, timeframe, conditionList);
     }
 
     public Map<String, SigmaDetection> getDetections() {
         return detections;
+    }
+
+    public String getTimeframe() {
+        return timeframe;
     }
 
     public List<String> getCondition() {

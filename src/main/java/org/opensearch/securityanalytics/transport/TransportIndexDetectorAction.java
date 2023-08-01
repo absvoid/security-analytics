@@ -91,6 +91,7 @@ import org.opensearch.securityanalytics.rules.backend.OSQueryBackend;
 import org.opensearch.securityanalytics.rules.backend.OSQueryBackend.AggregationQueries;
 import org.opensearch.securityanalytics.rules.backend.QueryBackend;
 import org.opensearch.securityanalytics.rules.exceptions.SigmaError;
+import org.opensearch.securityanalytics.rules.objects.SigmaRule;
 import org.opensearch.securityanalytics.settings.SecurityAnalyticsSettings;
 import org.opensearch.securityanalytics.util.DetectorIndices;
 import org.opensearch.securityanalytics.util.IndexUtils;
@@ -511,9 +512,11 @@ public class TransportIndexDetectorAction extends HandledTransportAction<IndexDe
                 BoolQueryBuilder boolQueryBuilder = searchSourceBuilder.query() == null
                         ? new BoolQueryBuilder()
                         : QueryBuilders.boolQuery().must(searchSourceBuilder.query());
+                SigmaRule sigmaRuleReloaded = SigmaRule.fromYaml(rule.getRule(), true);
+                String timeframe = sigmaRuleReloaded.getTimeframe() == null ? "1h" : sigmaRuleReloaded.getTimeframe();
                 RangeQueryBuilder timeRangeFilter = QueryBuilders.rangeQuery(TIMESTAMP_FIELD_ALIAS)
-                        .gt("{{period_end}}||-1h")
-                        .lte("{{period_end}}")
+                        .gt(String.format("now-%s", timeframe))
+                        .lte("now")
                         .format("epoch_millis");
                 boolQueryBuilder.must(timeRangeFilter);
                 searchSourceBuilder.query(boolQueryBuilder);

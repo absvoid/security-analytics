@@ -134,7 +134,7 @@ public class SigmaRuleTests extends OpenSearchTestCase {
 
         SigmaDetection detection = new SigmaDetection(Collections.singletonList(Either.left(detectionItem)),
                 Either.right(ConditionOR.class));
-        SigmaDetections detections = new SigmaDetections(Collections.singletonMap("selection", detection), Collections.singletonList("selection"));
+        SigmaDetections detections = new SigmaDetections(Collections.singletonMap("selection", detection), null, Collections.singletonList("selection"));
         SigmaRule rule = new SigmaRule("Test", logSource, detections, null, null, null, null, null,
                 null, null, null, null, null, null);
 
@@ -142,6 +142,36 @@ public class SigmaRuleTests extends OpenSearchTestCase {
         Assert.assertEquals(0, rule.getFields().size());
         Assert.assertEquals(0, rule.getTags().size());
         Assert.assertEquals(0, rule.getFalsePositives().size());
+    }
+
+    public void testSigmaRuleWithTimeframe() throws SigmaError, ParseException {
+        SigmaRule sigmaRuleWithTimeframe = SigmaRule.fromYaml(
+                "title: QuarksPwDump Clearing Access History\n" +
+                        "id: 39f919f3-980b-4e6f-a975-8af7e507ef2b\n" +
+                        "status: experimental\n" +
+                        "description: Detects QuarksPwDump clearing access history in hive\n" +
+                        "author: Florian Roth\n" +
+                        "date: 2017/05/15\n" +
+                        "modified: 2019/11/13\n" +
+                        "tags:\n" +
+                        "    - attack.credential_access\n" +
+                        "    - attack.t1003          # an old one\n" +
+                        "    - attack.t1003.002\n" +
+                        "level: critical\n" +
+                        "logsource:\n" +
+                        "    product: windows\n" +
+                        "    service: system\n" +
+                        "detection:\n" +
+                        "    selection:\n" +
+                        "        EventID: 16\n" +
+                        "        HiveName|endswith: '.dmp'\n" +
+                        "    timeframe: 5m\n" +
+                        "    condition: selection | count(*) by EventID > 3\n" +
+                        "falsepositives:\n" +
+                        "    - Unknown", true);
+
+        Assert.assertEquals("5m", sigmaRuleWithTimeframe.getTimeframe());
+//        Assert.assertNull(sigmaRuleWithTimeframe.getTimeframe());
     }
 
     public void testSigmaRuleFromYaml() throws SigmaError, ParseException {
@@ -195,7 +225,7 @@ public class SigmaRuleTests extends OpenSearchTestCase {
 
     public void testEmptyDetection() {
         Exception exception = assertThrows(SigmaDetectionError.class, () -> {
-            new SigmaDetections(Collections.emptyMap(), Collections.emptyList());
+            new SigmaDetections(Collections.emptyMap(), null, Collections.emptyList());
         });
 
         String expectedMessage = "No detections defined in Sigma rule";
@@ -216,7 +246,7 @@ public class SigmaRuleTests extends OpenSearchTestCase {
 
         SigmaDetection detection = new SigmaDetection(List.of(Either.left(detectionItem1), Either.left(detectionItem2), Either.left(detectionItem4)),
                 Either.right(ConditionOR.class));
-        SigmaDetections detections = new SigmaDetections(Collections.singletonMap("selection", detection), Collections.singletonList("selection"));
+        SigmaDetections detections = new SigmaDetections(Collections.singletonMap("selection", detection), null, Collections.singletonList("selection"));
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
         Date ruleDate = formatter.parse("2017/05/15");
